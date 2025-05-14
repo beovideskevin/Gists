@@ -1,0 +1,66 @@
+section p {
+    font-size: 1.2rem;
+}
+
+section li {
+    font-size: 1.2rem;
+}
+
+#header {
+    text-align: center;
+}
+
+#sidebar p {
+    font-size: 1em;
+}
+
+#about ul {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#about ul li {
+    font-size: 1em;
+}
+
+.mdxeditor-diff-source-wrapper {
+    min-height: 450px;
+}
+
+.editorForm {
+    margin-top: 1.5em
+}
+
+.editBtn {
+    text-align: center;
+    margin: 10px 10px;
+}
+
+.visible {
+    display: block !important;
+}
+
+.hidden {
+    transform: translateX(-100%);
+}
+
+#main {
+    overflow-x: auto !important;
+}
+
+#search {
+    display: flex !important;
+    justify-content: space-between;
+}
+
+#search form {
+    width: 75% !important;
+}
+
+#homeBtn {
+    font-size: 2em !important;
+}
+
+#homeBtn a {
+    padding: 10px;
+}
