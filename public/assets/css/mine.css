@@ -1,3 +1,15 @@
+th {
+    vertical-align: top !important;
+}
+
+.noOverflowX {
+    overflow-x: auto !important;
+}
+
+#main section {
+    padding: 4em 0 4em 0 !important;
+}
+
 section p {
     font-size: 1.2rem;
 }
@@ -6,61 +18,98 @@ section li {
     font-size: 1.2rem;
 }
 
-#header {
-    text-align: center;
+.abstract #table-of-contents{
+    display: none;
 }
 
-#sidebar p {
-    font-size: 1em;
+#table-of-contents {
+    margin: 0 0 2em 0;
+    padding: 0;
 }
 
-#about ul {
-    display: flex;
-    justify-content: space-evenly;
+#table-of-contents ol {
+    list-style-type: upper-roman;
+    margin: 0;
 }
 
-#about ul li {
-    font-size: 1em;
+#table-of-contents li a {
+    color: #3d4449;
 }
 
 .mdxeditor-diff-source-wrapper {
     min-height: 450px;
 }
 
+.mdxeditor-toolbar {
+    top: 0px !important;
+}
+
+.cm-panels.cm-panels-bottom {
+    bottom: 80px !important;
+}
+
 .editorForm {
-    margin-top: 1.5em
+    caret-color: #f56a6a !important;
 }
 
-.editBtn {
-    text-align: center;
-    margin: 10px 10px;
+.cm-matchingBracket {
+    outline: 0 !important;
 }
 
-.visible {
-    display: block !important;
+.fixedBtns {
+    background-color: rgb(255,255,255,0.7);
+    position: sticky;
+    bottom: 0;
+    padding: 10px;
+    z-index: 1000;
+}
+
+.fixedBtns input[type="reset"] {
+    background-color: #ffffff !important;
+}
+
+.actionsCenter {
+    display: flex;
+    justify-content: center;
+}
+
+#sidebar p {
+    font-size: 1em;
+}
+
+.littlestar {
+    float: right;
+    font-size: 0.5em;
+}
+
+.icons.social {
+    display: flex;
+    justify-content: space-around;
 }
 
 .hidden {
     transform: translateX(-100%);
 }
 
-#main {
-    overflow-x: auto !important;
+.toggle:before {
+    color: #f56a6a !important;
 }
 
-#search {
-    display: flex !important;
-    justify-content: space-between;
+@media screen and (max-width: 736px) {
+    .toggle:before {
+        color: #ffffff !important;
+    }
+    .toggle:after {
+        background-color: #f56a6a !important;
+    }
 }
 
-#search form {
-    width: 75% !important;
-}
+@media (min-width: 1280px) {
+    .toggle {
+        display: none !important;
+    }
 
-#homeBtn {
-    font-size: 2em !important;
-}
-
-#homeBtn a {
-    padding: 10px;
+    #header {
+        padding-top: 3em !important;
+    }
 }

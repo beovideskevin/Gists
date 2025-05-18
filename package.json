@@ -16,6 +16,8 @@
     "@types/react-router-dom": "^5.3.3",
     "axios": "^1.9.0",
     "marked": "^15.0.11",
+    "marked-custom-heading-id": "^2.0.14",
+    "marked-gfm-heading-id": "^4.1.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-redux": "^9.2.0",

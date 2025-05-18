@@ -10,16 +10,12 @@ const Sidebar = (props: { navItems: NavItem[] }) => {
     const [filtered, setFiltered] = useState<NavItem[]>([]);
     const [sidebar, setSidebar] = useState(true);
 
-    useEffect(() => {
-        setFiltered(props.navItems);
-    }, [props.navItems]);
-
     const toggleSidebar = () => {
         setSidebar(!sidebar);
     }
 
     return (
-        <div id="sidebar" className={sidebar ? "visible" : "hidden"}>
+        <div id="sidebar" className={sidebar ? "" : "hidden"}>
             <div className="toggle" onClick={e => toggleSidebar()}>Toggle</div>
             <div className="inner">
                 <Search navItems={props.navItems} filteredItems={setFiltered} />

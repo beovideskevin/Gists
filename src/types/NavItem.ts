@@ -1,5 +1,6 @@
 export default interface NavItem {
-    id: number;
+    id: string;
     name: string;
+    starred: boolean;
     updated: string;
 }

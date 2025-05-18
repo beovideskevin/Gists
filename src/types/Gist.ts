@@ -1,8 +1,8 @@
-export default interface Abstract {
+export default interface Gist {
     id: string;
     filename: string;
     description: string;
     abstract: string;
-    updated: string;
     url: string;
+    updated: string;
 }

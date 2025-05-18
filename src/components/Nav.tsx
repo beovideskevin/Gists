@@ -1,6 +1,6 @@
 import React from 'react';
 import NavItem from "../types/NavItem";
-import {Link} from "react-router-dom";
+import GistLink from "./GistLink";
 
 const Nav = (props: { filteredItems: NavItem[] }) => {
     return (
@@ -10,7 +10,7 @@ const Nav = (props: { filteredItems: NavItem[] }) => {
             </header>
             <ul>
             {props.filteredItems.map(item => (
-                    <li key={item.id}><Link to={`/show/${item.id}`}>{item.name}</Link></li>
+                <GistLink item={item} key={item.id}/>
                 ))}
             </ul>
         </nav>

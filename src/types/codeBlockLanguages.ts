@@ -1,21 +1,21 @@
 const codeBlockLanguages = [
     '',
-    'HTML',
-    'CSS',
-    'Javascript',
-    'Typescript',
-    'PHP',
-    'Python',
-    'Go',
-    'C',
-    'Cpp',
-    'Java',
-    'Kotlin',
-    'JSON',
-    'Bash',
-    'SQL',
-    'XML',
-    'YAML'
+    'bash',
+    'c',
+    'css',
+    'html',
+    'java',
+    'javascript',
+    'jsx',
+    'json',
+    'php',
+    'python',
+    'graphql',
+    'sql',
+    'typescript',
+    'tsx',
+    'xml',
+    'yaml'
 ];
 
 export default codeBlockLanguages;
