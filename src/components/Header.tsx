@@ -1,12 +1,17 @@
-import React, {SyntheticEvent, useEffect} from "react";
+import React, {SyntheticEvent, useEffect, useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Header = (props: { filename: string, url: string, id: string | undefined }) => {
+    const [filename, setFilename] = useState(props.filename);
     const navigate = useNavigate();
 
     useEffect(() => {
-        document.title = `Gist - ${props.filename}`;
+        let filename = props.filename.indexOf('.') !== -1 ?
+            props.filename.slice(0, props.filename.lastIndexOf('.')) :
+            props.filename
+        setFilename(filename);
+        document.title = `Gist - ${filename}`;
     }, [props.filename]);
 
     const delGist = (e: SyntheticEvent) => {
@@ -24,15 +29,17 @@ const Header = (props: { filename: string, url: string, id: string | undefined }
     return (
         <header id="header">
             {props.id !== "" ?
-                <Link className="logo" to={`/show/${props.id}`}><strong>{props.filename}</strong></Link> :
-                <div className="logo"><strong>{props.filename}</strong></div>}
+                <Link className="logo" to={`/show/${props.id}`}><strong>{filename}</strong></Link> :
+                <div className="logo"><strong>{filename}</strong></div>}
 
             {props.id !== "" ?
                 <ul className="icons">
                     <li><Link to={`/edit/${props.id}`} className="icon solid fa-edit">&nbsp;</Link></li>
                     <li><Link to={props.url} className="icon solid fa-link" target="_blank"
                               rel="noopener noreferrer">&nbsp;</Link></li>
-                    <li><Link to={"#"} onClick={e => {delGist(e)}} className="icon solid fa-trash">&nbsp;</Link></li>
+                    <li><Link to={"#"} onClick={e => {
+                        delGist(e)
+                    }} className="icon solid fa-trash">&nbsp;</Link></li>
                     <li><Link to={"/"} className="icon solid fa-home">&nbsp;</Link></li>
                 </ul> :
                 <ul className="icons">

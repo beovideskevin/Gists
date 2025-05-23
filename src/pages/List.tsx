@@ -18,34 +18,36 @@ const List = () => {
         updated: "",
     });
     const [shortPosts, setShortPosts] = useState<Gist[]>([]);
-    const context: { latest: Gist, starred: Gist[] } = useOutletContext();
+    const context: { starred: Gist[] } = useOutletContext();
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        if (context === undefined) {
+        if (context.starred.length === 0) {
             return;
         }
-        setLatest(context.latest);
-        getLatestAbstract(context.latest);
-        setShortPosts(context.starred);
+        getAbstract(context.starred);
     }, [context]);
 
-    const getLatestAbstract = async (latest: Gist) => {
-        if (latest.id === "") {
+    const getAbstract = async (allPosts: Gist[]) => {
+        const latest = context.starred.shift();
+        if (latest === undefined) {
             return;
         }
         try {
             const response = await axios.get(`gists/${latest.id}`);
             const files:any = Object.values(response.data.files)[0];
-            let abstract = files.content.split("\n").map((line: string) => {
-                return line.length > 0 ? line + "\n" : "";
-            }).join("").substring(0, 200);
-            setAbstract(abstract);
+            setLatest(latest);
+            setAbstract(
+                files.content.split("\n").map((line: string) => {
+                    return line.length > 0 ? line + "\n" : "";
+                }).join("").substring(0, 200)
+            );
         } catch (error) {
-            alert("Error fetching data. Please check your internet connection or the URL.");
+            // alert("Error fetching data. Please check your internet connection or the URL.");
             console.log(error);
         }
-    }
+        setShortPosts(allPosts);
+    };
 
     if (latest.id === "") {
         return (
@@ -68,7 +70,7 @@ const List = () => {
                 <section className="abstract">
                     <div dangerouslySetInnerHTML={{__html: marked.parse(abstract) as string}}/>
                     <ul className="actions">
-                        <li><Link to={`/show/${latest.id}`} className="button">Read</Link></li>
+                        <li><Link to={`/show/${latest.id}`} className="button small">Read</Link></li>
                     </ul>
                 </section>
 
@@ -79,10 +81,11 @@ const List = () => {
                         <h2>Starred gists</h2>
                     </header>
                     <div className="posts">
-                        {shortPosts.map((item: Gist, index: number) => (
-                            <ShortPost id={item.id} filename={item.filename} key={index.toString()}
-                                       description={item.description}/>
-                        ))}
+                        {shortPosts.map((item: Gist, index: number) => {
+                                return (<ShortPost id={item.id} filename={item.filename} key={index.toString()}
+                                               description={item.description}/>)
+                            }
+                        )}
                     </div>
                 </section>
             </div>

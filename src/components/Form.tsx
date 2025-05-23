@@ -19,6 +19,7 @@ import '@mdxeditor/editor/style.css';
 
 const Form = (props: {id: string|undefined }) => {
     const ref = useRef<MDXEditorMethods>(null);
+    const [fileKey, setFileKey] = useState("");
     const [filename, setFilename] = useState("Untitled");
     const [url, setUrl] = useState("");
     const [description, setDescription] = useState("");
@@ -44,6 +45,8 @@ const Form = (props: {id: string|undefined }) => {
             setInitialDescription(data.data.description);
             setVisibility(data.data.public ? "public" : "private");
             setInitialVisibility(data.data.public ? "public" : "private");
+            const fileKey = Object.keys(data.data.files)[0];
+            setFileKey(fileKey);
             const files:any = Object.values(data.data.files)[0];
             setFilename(files.filename);
             setInitialFilename(files.filename);
@@ -82,18 +85,32 @@ const Form = (props: {id: string|undefined }) => {
             alert("Please enter a filename.");
             return;
         }
+        let fileWithExt = filename.endsWith(".md") ? filename : filename + ".md";
+        setFilename(fileWithExt);
         const content = ref.current?.getMarkdown()
             .trim()
             .replace(/\n\n\n+/g, '\n\n') // Remove extra new lines, "fixes horror vacui" bug
             .replace(/&#.*;/g, ''); // Remove HTML entities for utf8 chars; another bug
-        const payload = {
-            description: description,
-            public: visibility === "public",
-            files: {[filename]: {"content": `${content}`, "type": "text/markdown", "language": "Markdown"}}
-        };
         if (props.id) {
-            axios.patch(`gists/${props.id}`, payload).then(response => {
-                setInitialFilename(filename);
+            const files: Record<string, any> = {
+                [fileWithExt]: {
+                    "filename": fileWithExt,
+                    "content": content,
+                    "type": "text/markdown",
+                    "language": "Markdown"
+                }
+            };
+            if (fileKey !== fileWithExt) {
+                files[fileKey] = null;
+                setFileKey(fileWithExt);
+            }
+            const editPayload = {
+                description: description,
+                public: visibility === "public",
+                files
+            };
+            axios.patch(`gists/${props.id}`, editPayload).then(response => {
+                setInitialFilename(fileWithExt);
                 setInitialDescription(description);
                 setInitialVisibility(visibility);
                 setInitialContent(content || "");
@@ -104,7 +121,18 @@ const Form = (props: {id: string|undefined }) => {
             });
         }
         else {
-            axios.post("gists", payload).then(response => {
+            const createPayload = {
+                description: description,
+                public: visibility === "public",
+                files: {
+                    [fileWithExt]: {
+                        "filename ": fileWithExt,
+                        "content": `${content}`,
+                        "type": "text/markdown",
+                        "language": "Markdown"}
+                }
+            };
+            axios.post("gists", createPayload).then(response => {
                 navigate(`/show/${response.data.id}`);
             }).catch(error => {
                 alert("Error saving data. Please check your internet connection or the URL.");
@@ -192,11 +220,11 @@ const Form = (props: {id: string|undefined }) => {
                         </div>
                         <div className="col-12 fixedBtns">
                             <ul className="actions actionsCenter">
-                                <li><input type="reset" value="Cancel"
+                                <li><input type="submit" value="Save" className="button primary small"/></li>
+                                <li><input type="reset" value="Cancel" className="button small"
                                            onClick={() => cancel()}/></li>
-                                <li><input type="reset" value="Reset"
+                                <li><input type="reset" value="Reset" className="button small"
                                            onClick={() => resetGist()}/></li>
-                                <li><input type="submit" value="Save" className="primary"/></li>
                             </ul>
                         </div>
                     </div>

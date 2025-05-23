@@ -28,11 +28,11 @@ const Show = () => {
             {
                 Object.entries(files).map(([filename, data]: [string, any]) => (
                     <div className="inner" key={filename}>
-                        <Header filename={filename.lastIndexOf('.') !== -1 ? filename.slice(0, filename.lastIndexOf('.')) : filename} url={url} id={id} />
+                        <Header filename={filename} url={url} id={id} />
                         <section>
                             <div dangerouslySetInnerHTML={{__html: marked.parse(data.content) as string}}/>
                             <ul className="actions actionsCenter">
-                                <li><Link to={`/edit/${id}`} className="button primary">Edit</Link></li>
+                                <li><Link to={`/edit/${id}`} className="button primary small">Edit</Link></li>
                             </ul>
                         </section>
                     </div>

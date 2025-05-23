@@ -10,8 +10,17 @@ th {
     padding: 4em 0 4em 0 !important;
 }
 
+#main section ul, ol {
+    margin-bottom: 0;
+}
+
 section p {
     font-size: 1.2rem;
+    margin: 0 0 1em 0;
+}
+
+section code {
+    font-size: 1.0rem;
 }
 
 section li {
@@ -20,6 +29,10 @@ section li {
 
 .abstract #table-of-contents{
     display: none;
+}
+
+.abstract div {
+    margin-bottom: 2em;
 }
 
 #table-of-contents {
@@ -45,7 +58,42 @@ section li {
 }
 
 .cm-panels.cm-panels-bottom {
-    bottom: 80px !important;
+    bottom: 90px !important;
+    border: 1px solid !important;
+}
+
+.cm-search.cm-panel label {
+    display: inline-block;
+}
+
+.cm-search.cm-panel button {
+    margin: .2em .6em .2em 0 !important;
+    border: 0 !important;
+}
+
+.cm-search.cm-panel input {
+    appearance: auto;
+    opacity: 1;
+}
+
+.cm-search.cm-panel button[name="close"] {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: large !important;
+    margin: 5px 0 !important;
+}
+
+.mdxeditor-popup-container button[type="submit"]{
+    background-color: #f56a6a;
+    color: #ffffff !important;
+    border: 1px solid #f56a6a !important;
+}
+
+.mdxeditor-popup-container button[type="reset"]{
+    color: #f56a6a;
+    background-color: #ffffff;
+    border: 1px solid #f56a6a !important;
 }
 
 .editorForm {

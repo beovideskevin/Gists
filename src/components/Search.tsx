@@ -5,7 +5,10 @@ const Search = (props: { navItems: NavItem[], filteredItems: (navItems: NavItem[
     const [search, setSearch] = useState("");
 
     useEffect(() => {
-        const results = props.navItems.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()));
+        const results = props.navItems.filter(
+            (item) => item.name.toLowerCase().includes(search.toLowerCase()) ||
+                item.desc.toLowerCase().includes(search.toLowerCase())
+        );
         props.filteredItems(results);
     }, [search, props.navItems]);
 

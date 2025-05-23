@@ -43,6 +43,7 @@ function App() {
                     const item = {
                         id: record.id,
                         name: filename.lastIndexOf('.') !== -1 ? filename.slice(0, filename.lastIndexOf('.')) : filename,
+                        desc: record.description,
                         starred: false,
                         updated: record.updated_at
                     }
@@ -50,15 +51,18 @@ function App() {
                 });
             });
 
-            // Get the last worked on gist
+            // Get starred items
+            let starredItems:Gist[] = [];
+
+            // Get the last worked on gist and include it in teh starred items
             const latest = response.data.reduce((latest: any, item: any) => {
                 return item.files && new Date(item.updated_at).getTime() > new Date(latest.updated_at).getTime() ? item : latest;
             }, response.data[0]);
             if (latest) {
                 let latestFilename = latest.files[Object.keys(latest.files)[0]].filename;
-                setLatest({
+                starredItems.push({
                     id: latest.id,
-                    filename: latestFilename.lastIndexOf('.') !== -1 ? latestFilename.slice(0, latestFilename.lastIndexOf('.')) : latestFilename,
+                    filename: latestFilename,
                     description: latest.description,
                     abstract: "",
                     url: latest.html_url,
@@ -66,8 +70,6 @@ function App() {
                 });
             }
 
-            // Get starred items
-            let starredItems:Gist[] = [];
             axios.get(`gists/starred`).then(response => {
                 response.data.map((record: any) => {
                     // Set the nav link to starred in the sidebar
@@ -79,7 +81,7 @@ function App() {
                     Object.keys(record.files).map((filename: string) => {
                         const item = {
                             id: record.id,
-                            filename: filename.lastIndexOf('.') !== -1 ? filename.slice(0, filename.lastIndexOf('.')) : filename,
+                            filename: filename,
                             description: record.description,
                             abstract: "",
                             url: record.html_url,
@@ -90,7 +92,7 @@ function App() {
                 });
 
                 // Fill the array with empty items because otherwise the design breaks a little
-                while(starredItems.length < 6) {
+                while(starredItems.length < 7) {
                     starredItems.push({
                         id: "",
                         filename: "",
@@ -100,7 +102,7 @@ function App() {
                         updated: "",
                     });
                 }
-                setStarred(starredItems.slice(0, 6));
+                setStarred(starredItems.slice(0, 7));
             }).catch(error => {
                 console.log(error);
             });
@@ -126,7 +128,7 @@ function App() {
 
     return (
         <div id="wrapper" className="App">
-            <Outlet context={{latest, starred}}/>
+            <Outlet context={{starred}}/>
             <Sidebar navItems={navItems}/>
         </div>
     );
